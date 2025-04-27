@@ -75,7 +75,7 @@ VAIBHAV KUMAR
 
 # 📽️ Demo & Deliverables
 
-- **Demo Video Link:** 
+- **Demo Video Link:https://www.loom.com/share/3f135f71e5df4f2aa929ca4a65afd4d6?sid=7bd44ce9-075d-4c1c-85e0-8f3797ed25f8** 
 
 
 
@@ -91,7 +91,6 @@ Can be done by just clicking the link https://ritual-rpg-adventures-8jcqwas66-ad
 - .env file setup
 
 **Local Setup:**
-```bash
 # Clone the repo
 git clone https://github.com/code-silver01/ritual-rpg-adventures.git
 
@@ -101,7 +100,7 @@ npm install
 
 # Start the development server
 npm run dev
-```
+
 > Make sure to create a `.env` file with required API keys and MongoDB URI!
 
 **Backend/Frontend:**  
@@ -122,7 +121,7 @@ Next.js for frontend + Node.js/Express backend connected to MongoDB.
  📎 Resources / Credits
 - **APIs Used:** Auth0, Chart.js
 - **Open-source libraries:** Framer Motion, Tailwind UI, MongoDB Atlas
-- **Acknowledgements:** Huge thanks to open source RPG UI kits and productivity communities!
+- **Acknowledgements:** Huge thanks to open source RPG UI kits and productivity communities along with vibe code AI tools!
 
 ---
 
