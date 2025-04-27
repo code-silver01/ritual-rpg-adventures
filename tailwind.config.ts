@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,19 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Fantasy theme colors
+				fantasy: {
+					primary: '#6f42c1', // Royal purple
+					secondary: '#2c7be5', // Wizard blue
+					accent: '#f6ad55', // Golden accent
+					dark: '#2f365f', // Dark background
+					light: '#f8f9fc', // Light text/background
+					success: '#25b47e', // Success green
+					danger: '#e63757', // Danger red
+					warning: '#f68e1f', // Warning orange
+					info: '#39afd1', // Info blue
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +97,35 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-glow': {
+					'0%, 100%': { 
+						opacity: '1',
+						boxShadow: '0 0 8px 2px rgba(111, 66, 193, 0.7)'
+					},
+					'50%': { 
+						opacity: '0.8',
+						boxShadow: '0 0 16px 4px rgba(111, 66, 193, 0.9)'
+					}
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-glow': 'pulse-glow 2s infinite',
+				'float': 'float 6s ease-in-out infinite'
+			},
+			backgroundImage: {
+				'fantasy-gradient': 'linear-gradient(to bottom right, #472483, #6f42c1, #2c7be5)',
+				'quest-card': "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAzNGMwLTIuMi0xLjgtNC00LTRzLTQgMS44LTQgNCAxLjggNCA0IDQgNC0xLjggNC00eiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuMDciLz48L2c+PC9zdmc+');",
+			},
+			fontFamily: {
+				'fantasy': ['Cinzel', 'serif'],
+				'fantasy-body': ['Raleway', 'sans-serif']
 			}
 		}
 	},
