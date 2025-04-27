@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -111,13 +110,42 @@ export default {
 				'float': {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' }
+				},
+				'avatar-levelup': {
+					'0%, 100%': { 
+						boxShadow: '0 0 15px 5px rgba(111, 66, 193, 0.4)'
+					},
+					'50%': { 
+						boxShadow: '0 0 25px 10px rgba(111, 66, 193, 0.7)'
+					}
+				},
+				'progress-fill': {
+					'0%': { transform: 'scaleX(0)' },
+					'100%': { transform: 'scaleX(1)' }
+				},
+				'quest-complete': {
+					'0%': { 
+						transform: 'scale(1)',
+						opacity: '1'
+					},
+					'50%': { 
+						transform: 'scale(1.2)',
+						opacity: '0.8'
+					},
+					'100%': { 
+						transform: 'scale(1)',
+						opacity: '1'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'pulse-glow': 'pulse-glow 2s infinite',
-				'float': 'float 6s ease-in-out infinite'
+				'float': 'float 6s ease-in-out infinite',
+				'avatar-levelup': 'avatar-levelup 2s ease-in-out infinite',
+				'progress-fill': 'progress-fill 0.6s ease-out forwards',
+				'quest-complete': 'quest-complete 0.5s ease-in-out'
 			},
 			backgroundImage: {
 				'fantasy-gradient': 'linear-gradient(to bottom right, #472483, #6f42c1, #2c7be5)',

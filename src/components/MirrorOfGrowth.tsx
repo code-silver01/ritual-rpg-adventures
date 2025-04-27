@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Mirror } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { HabitData } from './HabitSelection';
 
 interface MirrorOfGrowthProps {
@@ -14,7 +13,6 @@ interface MirrorOfGrowthProps {
 const MirrorOfGrowth: React.FC<MirrorOfGrowthProps> = ({ habitData }) => {
   const [isOpen, setIsOpen] = useState(false);
   
-  // Sample data - in a real app this would come from your backend
   const weeklyProgress = {
     completed: 15,
     total: 21,
@@ -29,15 +27,18 @@ const MirrorOfGrowth: React.FC<MirrorOfGrowthProps> = ({ habitData }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full fantasy-button-outline mt-4 flex items-center gap-2">
-          <Mirror className="h-5 w-5" />
+        <Button 
+          variant="outline" 
+          className="w-full fantasy-button-outline mt-4 flex items-center gap-2 hover:bg-fantasy-primary/10 transition-colors duration-300"
+        >
+          <Sparkles className="h-5 w-5" />
           Mirror of Growth
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] bg-gradient-to-b from-fantasy-dark to-gray-900 text-fantasy-light">
+      <DialogContent className="sm:max-w-[600px] bg-gradient-to-b from-fantasy-dark to-gray-900 text-fantasy-light transition-all duration-300">
         <DialogHeader>
           <DialogTitle className="text-2xl text-fantasy-accent font-fantasy flex items-center gap-2">
-            <Mirror className="h-6 w-6" />
+            <Sparkles className="h-6 w-6" />
             Mirror of Growth
           </DialogTitle>
           <DialogDescription>
@@ -46,8 +47,7 @@ const MirrorOfGrowth: React.FC<MirrorOfGrowthProps> = ({ habitData }) => {
         </DialogHeader>
 
         <div className="space-y-6">
-          {/* Weekly Progress */}
-          <Card className="fantasy-card border-fantasy-primary border-opacity-20">
+          <Card className="fantasy-card border-fantasy-primary border-opacity-20 transition-transform duration-300 hover:scale-[1.02]">
             <CardHeader>
               <CardTitle className="text-fantasy-accent">Weekly Progress</CardTitle>
               <CardDescription>
@@ -62,8 +62,7 @@ const MirrorOfGrowth: React.FC<MirrorOfGrowthProps> = ({ habitData }) => {
             </CardContent>
           </Card>
 
-          {/* Strong Habits */}
-          <Card className="fantasy-card border-fantasy-primary border-opacity-20">
+          <Card className="fantasy-card border-fantasy-primary border-opacity-20 transition-transform duration-300 hover:scale-[1.02]">
             <CardHeader>
               <CardTitle className="text-fantasy-accent">Your Strongest Quests</CardTitle>
               <CardDescription>
@@ -82,8 +81,7 @@ const MirrorOfGrowth: React.FC<MirrorOfGrowthProps> = ({ habitData }) => {
             </CardContent>
           </Card>
 
-          {/* Areas for Improvement */}
-          <Card className="fantasy-card border-fantasy-primary border-opacity-20">
+          <Card className="fantasy-card border-fantasy-primary border-opacity-20 transition-transform duration-300 hover:scale-[1.02]">
             <CardHeader>
               <CardTitle className="text-fantasy-accent">Quests Needing Attention</CardTitle>
               <CardDescription>
@@ -102,8 +100,7 @@ const MirrorOfGrowth: React.FC<MirrorOfGrowthProps> = ({ habitData }) => {
             </CardContent>
           </Card>
 
-          {/* Suggested Micro-Challenges */}
-          <Card className="fantasy-card border-fantasy-primary border-opacity-20">
+          <Card className="fantasy-card border-fantasy-primary border-opacity-20 transition-transform duration-300 hover:scale-[1.02]">
             <CardHeader>
               <CardTitle className="text-fantasy-accent">New Side Quests</CardTitle>
               <CardDescription>
