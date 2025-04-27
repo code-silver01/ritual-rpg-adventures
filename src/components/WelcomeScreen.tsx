@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -18,7 +17,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
           className="space-y-4"
         >
           <h1 className="text-5xl md:text-6xl font-fantasy text-fantasy-accent">
-            Questify
+            Habitify
           </h1>
           <p className="text-xl md:text-2xl">
             Turn your habits into epic quests and adventures
