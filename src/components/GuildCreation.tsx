@@ -14,7 +14,7 @@ interface GuildCreationProps {
 }
 
 export interface GuildData {
-  type: 'create' | 'join';
+  type: 'create' | 'join' | 'skip';
   guildName?: string;
   guildCode?: string;
   invitedFriends?: string[];

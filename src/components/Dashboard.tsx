@@ -9,6 +9,7 @@ import { Check, Calendar, BarChart, Trophy, MessageCircle, Users } from 'lucide-
 import AppHeader from './AppHeader';
 import QuestList from './QuestList';
 import GuildPanel from './GuildPanel';
+import BadgeSystem, { sampleBadges } from './BadgeSystem';
 import { AvatarData } from './AvatarCreation';
 import { HabitData } from './HabitSelection';
 
@@ -142,6 +143,9 @@ const Dashboard: React.FC<DashboardProps> = ({ avatarData, habitData }) => {
                 </Tabs>
               </CardContent>
             </Card>
+            
+            {/* Badges section */}
+            <BadgeSystem userBadges={sampleBadges} />
           </div>
           
           {/* Guild Panel & Rewards */}
