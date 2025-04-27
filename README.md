@@ -1,73 +1,135 @@
-# Welcome to your Lovable project
 
-## Project info
+# 🚀 Project Title
+**Ritual RPG Adventures**  
+*Level Up Your Life, One Habit at a Time!*
 
-**URL**: https://lovable.dev/projects/f751eb4c-cafc-466f-aa00-f32a38a7d744
+---
 
-## How can I edit this code?
+# 📌 Problem Statement
+**Problem Statement 9 – Build the utimate digital Habit builder**  
+*(Customized for Habit-Building Gamification in Productivity Apps)*
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+# 🎯 Objective
+**What problem does your project solve?**
+- Ritual RPG Adventures helps people build healthy, consistent habits through **gamification**.
+- It makes daily productivity **fun, social, and rewarding** by turning habits into **quests** in a fantasy RPG world.
+- It serves **students, professionals, and habit-seekers** who struggle to stay motivated in traditional habit trackers.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f751eb4c-cafc-466f-aa00-f32a38a7d744) and start prompting.
+**Real-world value:**
+- Boosts consistency through *dopamine-driven feedback loops*.
+- Encourages long-term retention with *guild challenges* and *adaptive rewards*.
+- Creates a **positive addiction** to self-improvement.
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+# 🧠 Team & Approach
+**Team Name:Bug Fixers**  
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+**Team Members:**
 
-Follow these steps:
+ANISH SINGHAL
+Aditya Goel
+Arushi Kumari
+VAIBHAV KUMAR
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+**Our Approach:**
+- We chose this problem because building habits is **one of the most transformative skills** — but most apps are boring.
+- We wanted to inject *fun*, *emotion*, and *social accountability* into productivity.
+- Major brainstorms:
+  - Switching from "task checklist" → "fantasy quest adventure"
+  - Building **guild mechanics** for social motivation
+  - Introducing **adaptive real-world rewards** after streaks
+- Pivots:
+  - Originally solo-play only → added Guild system
+  - Added Dashboard visualization for deeper habit tracking
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 🛠️ Tech Stack
+
+**Core Technologies Used:**
+- **Frontend:** Next.js, Tailwind CSS, Framer Motion
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB (Mongoose ORM)
+- **APIs:** Auth0 (Authentication), Chart.js (Visualizations)
+
+
+
+# ✨ Key Features
+
+✅ **Gamified Habit Quests** — Build habits by completing epic fantasy quests.  
+✅ **XP, Levels, and Character Growth** — See your avatar evolve visually as you build consistency.  
+✅ **Guild System & Group Boss Battles** — Team up with friends to slay monsters via collective habits.  
+✅ **Habit Dashboard & Visual Streak Tracker** — Track your growth with graphs, maps, and habit heatmaps.  
+✅ **Badges and Achievements** — Earn trophies like *Streak Slayer*, *Habit Master*, *Supportive Friend*.  
+✅ **Adaptive Mystery Chests & Real-World Offers** — Get surprise rewards for long streaks.  
+✅ **Weekly Reflection via AI Assistant** — Personalized habit insights and next-step suggestions.  
+
+
+
+
+
+# 📽️ Demo & Deliverables
+
+- **Demo Video Link:** 
+
+
+
+
+# 🧪 How to Run the Project
+
+Can be done by just clicking the link https://ritual-rpg-adventures-8jcqwas66-adityas-projects-e6956ced.vercel.app/
+
+**Requirements:**
+- Node.js
+- MongoDB Atlas
+- Auth0 API Key
+- .env file setup
+
+**Local Setup:**
+```bash
+# Clone the repo
+git clone https://github.com/code-silver01/ritual-rpg-adventures.git
+
+# Install dependencies
+cd ritual-rpg-adventures
+npm install
+
+# Start the development server
 npm run dev
 ```
+> Make sure to create a `.env` file with required API keys and MongoDB URI!
 
-**Edit a file directly in GitHub**
+**Backend/Frontend:**  
+Next.js for frontend + Node.js/Express backend connected to MongoDB.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+ 🧬 Future Scope
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- 📈 More integrations with fitness trackers, meditation apps.
+- 🛡️ Adding blockchain-based token rewards via Monad / Stellar.
+- 🌐 Localization for multiple languages and rural regions.
+- 🎭 Custom Avatar Skins, Pets, and Home Base upgrades.
+- 🤖 Deeper AI Coach integration for motivational nudges.
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+ 📎 Resources / Credits
+- **APIs Used:** Auth0, Chart.js
+- **Open-source libraries:** Framer Motion, Tailwind UI, MongoDB Atlas
+- **Acknowledgements:** Huge thanks to open source RPG UI kits and productivity communities!
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+🏁 Final Words
+This hackathon was an incredible experience —  
+We learned to **pivot quickly**, **think emotionally for users**, and **mix fun with function**.  
+Biggest fun moment: designing ridiculous fantasy names for real habits (like *"Summon the Spirit of Consistency"* instead of "Morning Run").  
+Thanks to the organizers for this magical opportunity! 🎉
 
-Simply open [Lovable](https://lovable.dev/projects/f751eb4c-cafc-466f-aa00-f32a38a7d744) and click on Share -> Publish.
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
