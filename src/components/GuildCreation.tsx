@@ -1,179 +1,77 @@
-
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
-import { motion } from 'framer-motion';
-import { Users } from 'lucide-react';
+import { Shield, Users } from 'lucide-react';
 
-interface GuildCreationProps {
-  onNext: (data: GuildData) => void;
-  onBack: () => void;
-}
-
-export interface GuildData {
-  type: 'create' | 'join' | 'skip';
-  guildName?: string;
-  guildCode?: string;
-  invitedFriends?: string[];
-}
-
-const GuildCreation: React.FC<GuildCreationProps> = ({ onNext, onBack }) => {
-  const [activeTab, setActiveTab] = useState<'create' | 'join'>('create');
+const GuildCreation: React.FC = () => {
+  const navigate = useNavigate();
   const [guildName, setGuildName] = useState('');
-  const [guildCode, setGuildCode] = useState('');
-  const [friendEmail, setFriendEmail] = useState('');
-  const [invitedFriends, setInvitedFriends] = useState<string[]>([]);
+  const [guildDescription, setGuildDescription] = useState('');
 
-  const handleAddFriend = () => {
-    if (friendEmail && !invitedFriends.includes(friendEmail)) {
-      setInvitedFriends([...invitedFriends, friendEmail]);
-      setFriendEmail('');
-    }
-  };
-
-  const handleRemoveFriend = (email: string) => {
-    setInvitedFriends(invitedFriends.filter(e => e !== email));
-  };
-
-  const handleSubmit = () => {
-    if (activeTab === 'create' && guildName) {
-      onNext({
-        type: 'create',
-        guildName,
-        invitedFriends
-      });
-    } else if (activeTab === 'join' && guildCode) {
-      onNext({
-        type: 'join',
-        guildCode
-      });
-    }
+  const handleCreateGuild = () => {
+    // TODO: Implement guild creation logic
+    navigate('/dashboard');
   };
 
   return (
-    <div className="min-h-screen bg-fantasy-dark py-12 px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-2xl mx-auto"
-      >
-        <Button 
-          variant="ghost" 
-          onClick={onBack}
-          className="mb-6 text-fantasy-light hover:text-fantasy-accent"
-        >
-          ← Back
-        </Button>
-        
-        <Card className="border-fantasy-primary border-opacity-20 bg-fantasy-dark bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-2xl">
+    <div className="min-h-screen bg-gradient-to-b from-fantasy-dark to-gray-900 py-12 px-4">
+      <div className="max-w-2xl mx-auto">
+        <Card className="fantasy-card border-fantasy-primary border-opacity-20">
           <CardHeader>
-            <CardTitle className="text-2xl text-center text-fantasy-accent">Guild Membership</CardTitle>
-            <CardDescription className="text-center text-fantasy-light">
-              Create or join a guild to embark on group adventures
+            <CardTitle className="text-fantasy-accent flex items-center">
+              <Shield className="w-6 h-6 mr-2" />
+              Create Your Guild
+            </CardTitle>
+            <CardDescription>
+              Form a guild to tackle challenges together and earn bonus rewards
             </CardDescription>
           </CardHeader>
-          
-          <CardContent>
-            <Tabs defaultValue="create" onValueChange={(v) => setActiveTab(v as 'create' | 'join')}>
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="create">Create a Guild</TabsTrigger>
-                <TabsTrigger value="join">Join a Guild</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="create" className="space-y-6">
-                <div>
-                  <Label htmlFor="guildName" className="text-fantasy-light">Guild Name</Label>
-                  <Input
-                    id="guildName"
-                    value={guildName}
-                    onChange={(e) => setGuildName(e.target.value)}
-                    placeholder="Enter a name for your guild"
-                    className="fantasy-input"
-                  />
-                </div>
-                
-                <div>
-                  <Label className="text-fantasy-light mb-2 block">Invite Friends (Optional)</Label>
-                  <div className="flex space-x-2 mb-4">
-                    <Input
-                      placeholder="Friend's email"
-                      value={friendEmail}
-                      onChange={(e) => setFriendEmail(e.target.value)}
-                      className="fantasy-input"
-                    />
-                    <Button 
-                      type="button" 
-                      onClick={handleAddFriend}
-                      className="bg-fantasy-accent text-fantasy-dark hover:bg-opacity-90"
-                    >
-                      Add
-                    </Button>
-                  </div>
-                  
-                  {invitedFriends.length > 0 && (
-                    <div className="space-y-2 mt-4">
-                      <h4 className="text-sm font-medium text-fantasy-light">Invited Friends:</h4>
-                      {invitedFriends.map((email, index) => (
-                        <div key={index} className="flex justify-between items-center bg-fantasy-dark bg-opacity-30 p-2 rounded-md">
-                          <span className="text-fantasy-light">{email}</span>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => handleRemoveFriend(email)}
-                            className="text-fantasy-danger hover:text-red-500 h-auto py-1"
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="join" className="space-y-6">
-                <div>
-                  <Label htmlFor="guildCode" className="text-fantasy-light">Guild Invite Code</Label>
-                  <Input
-                    id="guildCode"
-                    value={guildCode}
-                    onChange={(e) => setGuildCode(e.target.value)}
-                    placeholder="Enter the guild invite code"
-                    className="fantasy-input"
-                  />
-                </div>
-              </TabsContent>
-            </Tabs>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="guildName" className="text-fantasy-light">
+                Guild Name
+              </Label>
+              <Input
+                id="guildName"
+                value={guildName}
+                onChange={(e) => setGuildName(e.target.value)}
+                placeholder="Enter your guild name"
+                className="fantasy-input"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="guildDescription" className="text-fantasy-light">
+                Guild Description
+              </Label>
+              <Input
+                id="guildDescription"
+                value={guildDescription}
+                onChange={(e) => setGuildDescription(e.target.value)}
+                placeholder="Describe your guild's purpose"
+                className="fantasy-input"
+              />
+            </div>
           </CardContent>
-          
-          <CardFooter>
-            <Button 
-              onClick={handleSubmit}
-              disabled={(activeTab === 'create' && !guildName) || (activeTab === 'join' && !guildCode)}
-              className="w-full fantasy-button"
+          <CardFooter className="flex justify-between">
+            <Button
+              variant="outline"
+              onClick={() => navigate('/habits')}
+              className="fantasy-button-outline"
             >
-              {activeTab === 'create' ? 'Create Guild & Continue' : 'Join Guild & Continue'}
+              Back
+            </Button>
+            <Button
+              onClick={handleCreateGuild}
+              className="fantasy-button bg-fantasy-primary hover:bg-opacity-90"
+            >
+              Create Guild
             </Button>
           </CardFooter>
         </Card>
-        
-        <div className="mt-6 text-center text-fantasy-light">
-          <Button 
-            variant="link" 
-            className="text-fantasy-accent"
-            onClick={() => onNext({ type: 'skip' })}
-          >
-            Skip for now
-          </Button>
-          <p className="text-sm mt-1 text-fantasy-light text-opacity-60">
-            You can always create or join a guild later
-          </p>
-        </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

@@ -1,26 +1,30 @@
 import React from 'react';
-import { Bell, MessageSquare, Trophy, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Sword, Settings } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
-const AppHeader = () => {
+const AppHeader: React.FC = () => {
   return (
-    <header className="sticky top-0 z-40 bg-fantasy-dark bg-opacity-95 backdrop-filter backdrop-blur-sm">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="text-fantasy-accent font-fantasy text-2xl">Habitify</div>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="text-fantasy-light hover:bg-fantasy-primary hover:bg-opacity-20">
-            <Bell size={20} />
-          </Button>
-          <Button variant="ghost" size="icon" className="text-fantasy-light hover:bg-fantasy-primary hover:bg-opacity-20">
-            <MessageSquare size={20} />
-          </Button>
-          <Button variant="ghost" size="icon" className="text-fantasy-light hover:bg-fantasy-primary hover:bg-opacity-20">
-            <Trophy size={20} />
-          </Button>
-          <div className="w-8 h-8 rounded-full bg-fantasy-primary flex items-center justify-center text-white cursor-pointer">
-            <User size={18} />
+    <header className="bg-fantasy-dark border-b border-fantasy-primary border-opacity-20">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Sword className="h-6 w-6 text-fantasy-accent" />
+            <h1 className="text-xl font-fantasy text-fantasy-light">
+              Ritual RPG Adventures
+            </h1>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <ThemeToggle />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-fantasy-light hover:text-fantasy-accent"
+            >
+              <Settings className="h-5 w-5" />
+              <span className="sr-only">Settings</span>
+            </Button>
           </div>
         </div>
       </div>
