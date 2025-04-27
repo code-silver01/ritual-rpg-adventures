@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,13 +7,19 @@ import { Label } from '@/components/ui/label';
 import { motion } from 'framer-motion';
 
 interface HabitSelectionProps {
-  onNext: (data: HabitData) => void;
+  onHabitsSelected: (data: HabitData) => void;
   onBack: () => void;
 }
 
 export interface HabitData {
   selectedHabits: string[];
   customHabits: string[];
+  habits: {
+    id: string;
+    name: string;
+    frequency: string;
+    difficulty: string;
+  }[];
 }
 
 const predefinedHabits = [
@@ -32,35 +37,84 @@ const predefinedHabits = [
   { id: 'no-sugar', label: 'No added sugar', category: 'health' },
 ];
 
-const HabitSelection: React.FC<HabitSelectionProps> = ({ onNext, onBack }) => {
+const HabitSelection: React.FC<HabitSelectionProps> = ({ onHabitsSelected, onBack }) => {
   const [selectedHabits, setSelectedHabits] = useState<string[]>([]);
   const [customHabits, setCustomHabits] = useState<string[]>([]);
-  const [customHabitInput, setCustomHabitInput] = useState<string>('');
+  const [newCustomHabit, setNewCustomHabit] = useState('');
 
-  const handleToggleHabit = (habitId: string) => {
-    if (selectedHabits.includes(habitId)) {
-      setSelectedHabits(selectedHabits.filter((id) => id !== habitId));
-    } else {
-      setSelectedHabits([...selectedHabits, habitId]);
-    }
+  const handleHabitSelect = (habitId: string) => {
+    setSelectedHabits(prev => {
+      const newSelected = prev.includes(habitId)
+        ? prev.filter(id => id !== habitId)
+        : [...prev, habitId];
+      
+      // Update habits array
+      const habits = [
+        ...newSelected.map(id => {
+          const predefinedHabit = predefinedHabits.find(h => h.id === id);
+          return {
+            id,
+            name: predefinedHabit?.label || id,
+            frequency: predefinedHabit?.frequency || 'daily',
+            difficulty: predefinedHabit?.difficulty || 'medium'
+          };
+        }),
+        ...customHabits.map((name, index) => ({
+          id: `custom-${index}`,
+          name,
+          frequency: 'daily',
+          difficulty: 'medium'
+        }))
+      ];
+
+      onHabitsSelected({
+        selectedHabits: newSelected,
+        customHabits,
+        habits
+      });
+
+      return newSelected;
+    });
   };
 
   const handleAddCustomHabit = () => {
-    if (customHabitInput.trim() !== '') {
-      setCustomHabits([...customHabits, customHabitInput.trim()]);
-      setCustomHabitInput('');
+    if (newCustomHabit.trim()) {
+      setCustomHabits(prev => {
+        const newCustomHabits = [...prev, newCustomHabit.trim()];
+        
+        // Update habits array
+        const habits = [
+          ...selectedHabits.map(id => {
+            const predefinedHabit = predefinedHabits.find(h => h.id === id);
+            return {
+              id,
+              name: predefinedHabit?.label || id,
+              frequency: predefinedHabit?.frequency || 'daily',
+              difficulty: predefinedHabit?.difficulty || 'medium'
+            };
+          }),
+          ...newCustomHabits.map((name, index) => ({
+            id: `custom-${index}`,
+            name,
+            frequency: 'daily',
+            difficulty: 'medium'
+          }))
+        ];
+
+        onHabitsSelected({
+          selectedHabits,
+          customHabits: newCustomHabits,
+          habits
+        });
+
+        return newCustomHabits;
+      });
+      setNewCustomHabit('');
     }
   };
 
   const handleRemoveCustomHabit = (index: number) => {
     setCustomHabits(customHabits.filter((_, i) => i !== index));
-  };
-
-  const handleSubmit = () => {
-    onNext({
-      selectedHabits,
-      customHabits,
-    });
   };
 
   return (
@@ -98,7 +152,7 @@ const HabitSelection: React.FC<HabitSelectionProps> = ({ onNext, onBack }) => {
                       <Checkbox 
                         id={habit.id} 
                         checked={selectedHabits.includes(habit.id)}
-                        onCheckedChange={() => handleToggleHabit(habit.id)}
+                        onCheckedChange={() => handleHabitSelect(habit.id)}
                         className="mt-0.5 data-[state=checked]:bg-fantasy-primary data-[state=checked]:border-fantasy-primary"
                       />
                       <Label htmlFor={habit.id} className="text-fantasy-light">
@@ -120,7 +174,7 @@ const HabitSelection: React.FC<HabitSelectionProps> = ({ onNext, onBack }) => {
                       <Checkbox 
                         id={habit.id} 
                         checked={selectedHabits.includes(habit.id)}
-                        onCheckedChange={() => handleToggleHabit(habit.id)}
+                        onCheckedChange={() => handleHabitSelect(habit.id)}
                         className="mt-0.5 data-[state=checked]:bg-fantasy-primary data-[state=checked]:border-fantasy-primary"
                       />
                       <Label htmlFor={habit.id} className="text-fantasy-light">
@@ -142,7 +196,7 @@ const HabitSelection: React.FC<HabitSelectionProps> = ({ onNext, onBack }) => {
                       <Checkbox 
                         id={habit.id} 
                         checked={selectedHabits.includes(habit.id)}
-                        onCheckedChange={() => handleToggleHabit(habit.id)}
+                        onCheckedChange={() => handleHabitSelect(habit.id)}
                         className="mt-0.5 data-[state=checked]:bg-fantasy-primary data-[state=checked]:border-fantasy-primary"
                       />
                       <Label htmlFor={habit.id} className="text-fantasy-light">
@@ -159,8 +213,8 @@ const HabitSelection: React.FC<HabitSelectionProps> = ({ onNext, onBack }) => {
               <div className="flex space-x-2 mb-4">
                 <Input
                   placeholder="Add your custom habit"
-                  value={customHabitInput}
-                  onChange={(e) => setCustomHabitInput(e.target.value)}
+                  value={newCustomHabit}
+                  onChange={(e) => setNewCustomHabit(e.target.value)}
                   className="fantasy-input"
                 />
                 <Button 
@@ -194,8 +248,6 @@ const HabitSelection: React.FC<HabitSelectionProps> = ({ onNext, onBack }) => {
           
           <CardFooter>
             <Button 
-              onClick={handleSubmit}
-              disabled={selectedHabits.length === 0 && customHabits.length === 0}
               className="w-full fantasy-button"
             >
               Continue to Guild Creation

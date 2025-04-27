@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Check, Calendar, BarChart, Trophy, MessageCircle, Users } from 'lucide-react';
+import { Check, Calendar, BarChart, Trophy, MessageCircle, Users, Sword } from 'lucide-react';
 import AppHeader from './AppHeader';
 import QuestList from './QuestList';
 import GuildPanel from './GuildPanel';
@@ -12,6 +12,11 @@ import BadgeSystem, { sampleBadges } from './BadgeSystem';
 import { AvatarData } from './AvatarCreation';
 import { HabitData } from './HabitSelection';
 import MirrorOfGrowth from './MirrorOfGrowth';
+import QuestCompletionEffect from './QuestCompletionEffect';
+import QuestLore from './QuestLore';
+import HabitDashboard from './HabitDashboard';
+import TrophyRoom from './TrophyRoom';
+import GuildHall from './GuildHall';
 
 interface DashboardProps {
   avatarData: AvatarData;
@@ -19,6 +24,50 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ avatarData, habitData }) => {
+  const [showCompletionEffect, setShowCompletionEffect] = useState(false);
+  const [completedQuest, setCompletedQuest] = useState<{ name: string; xp: number } | null>(null);
+  const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>(['first-quest']);
+  const [activeGuild, setActiveGuild] = useState<any>(null);
+  const [publicGuilds] = useState([
+    {
+      id: '1',
+      name: 'The Morning Warriors',
+      description: 'Early risers who conquer their habits before dawn',
+      memberCount: 42,
+      level: 3,
+      challenges: [],
+      activeMembers: []
+    },
+    {
+      id: '2',
+      name: 'The Mindful Mystics',
+      description: 'Masters of meditation and mental clarity',
+      memberCount: 28,
+      level: 2,
+      challenges: [],
+      activeMembers: []
+    }
+  ]);
+
+  const handleQuestComplete = (questName: string, xp: number) => {
+    setCompletedQuest({ name: questName, xp });
+    setShowCompletionEffect(true);
+    
+    // Check for achievements
+    const newAchievements = [...unlockedAchievements];
+    if (!newAchievements.includes('first-quest')) {
+      newAchievements.push('first-quest');
+    }
+    setUnlockedAchievements(newAchievements);
+  };
+
+  const handleJoinGuild = (guildId: string) => {
+    const guild = publicGuilds.find(g => g.id === guildId);
+    if (guild) {
+      setActiveGuild(guild);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-fantasy-dark to-gray-900 text-fantasy-light">
       <AppHeader />
@@ -43,45 +92,12 @@ const Dashboard: React.FC<DashboardProps> = ({ avatarData, habitData }) => {
               <h3 className="text-xl font-fantasy mb-1">{avatarData.name || 'Adventurer'}</h3>
               <p className="text-fantasy-accent mb-3 capitalize">{avatarData.class} • Level 1</p>
               
-              <div className="w-full space-y-4">
-                <div>
-                  <div className="flex justify-between mb-1 text-sm">
-                    <span>XP Progress</span>
-                    <span>25/100</span>
-                  </div>
-                  <Progress value={25} className="fantasy-progress-bar" />
+              <div className="w-full space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Experience</span>
+                  <span>0/100</span>
                 </div>
-                
-                <div>
-                  <div className="flex justify-between mb-1 text-sm">
-                    <span>Health</span>
-                    <span>85/100</span>
-                  </div>
-                  <Progress value={85} className="fantasy-progress-bar" />
-                </div>
-                
-                <div>
-                  <div className="flex justify-between mb-1 text-sm">
-                    <span>Energy</span>
-                    <span>60/100</span>
-                  </div>
-                  <Progress value={60} className="fantasy-progress-bar" />
-                </div>
-              </div>
-              
-              <div className="border-t border-gray-700 w-full mt-6 pt-4 flex justify-around">
-                <div className="text-center">
-                  <div className="text-xl font-bold text-fantasy-accent">3</div>
-                  <div className="text-xs">Quests</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-xl font-bold text-fantasy-accent">2</div>
-                  <div className="text-xs">Streaks</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-xl font-bold text-fantasy-accent">5</div>
-                  <div className="text-xs">Badges</div>
-                </div>
+                <Progress value={0} className="h-2" />
               </div>
             </CardContent>
           </Card>
@@ -101,87 +117,67 @@ const Dashboard: React.FC<DashboardProps> = ({ avatarData, habitData }) => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <QuestList habitData={habitData} />
+                <QuestList 
+                  habitData={habitData} 
+                  onQuestComplete={handleQuestComplete}
+                />
               </CardContent>
             </Card>
             
-            <Card className="fantasy-card border-fantasy-primary border-opacity-20">
-              <CardHeader>
-                <CardTitle className="text-fantasy-accent">Habit Dashboard</CardTitle>
-                <CardDescription>
-                  Track your progress and consistency
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Tabs defaultValue="weekly">
-                  <TabsList>
-                    <TabsTrigger value="weekly">Weekly</TabsTrigger>
-                    <TabsTrigger value="monthly">Monthly</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="weekly" className="pt-4">
-                    <div className="h-40 flex items-center justify-center bg-gray-800 bg-opacity-30 rounded-md">
-                      <div className="text-center">
-                        <BarChart className="h-10 w-10 mx-auto mb-2 text-fantasy-accent opacity-60" />
-                        <p>Weekly habit tracking charts will appear here</p>
-                        <p className="text-xs text-fantasy-light text-opacity-60 mt-1">
-                          Complete quests to see your progress
-                        </p>
-                      </div>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="monthly" className="pt-4">
-                    <div className="h-40 flex items-center justify-center bg-gray-800 bg-opacity-30 rounded-md">
-                      <div className="text-center">
-                        <Calendar className="h-10 w-10 mx-auto mb-2 text-fantasy-accent opacity-60" />
-                        <p>Monthly habit calendar will appear here</p>
-                        <p className="text-xs text-fantasy-light text-opacity-60 mt-1">
-                          Complete quests to build your streak
-                        </p>
-                      </div>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
-            
-            {/* Badges section */}
-            <BadgeSystem userBadges={sampleBadges} />
+            {/* Habit Dashboard */}
+            <HabitDashboard habitData={[
+              {
+                id: 'exercise',
+                name: 'Exercise',
+                streak: 5,
+                completedDates: ['2024-04-20', '2024-04-21', '2024-04-22', '2024-04-23', '2024-04-24'],
+                totalCompletions: 15
+              },
+              {
+                id: 'meditation',
+                name: 'Meditation',
+                streak: 3,
+                completedDates: ['2024-04-22', '2024-04-23', '2024-04-24'],
+                totalCompletions: 8
+              }
+            ]} />
           </div>
           
-          {/* Guild Panel & Rewards */}
+          {/* Right Sidebar */}
           <div className="lg:col-span-3 space-y-6">
-            <GuildPanel />
+            {/* Trophy Room */}
+            <TrophyRoom unlockedAchievements={unlockedAchievements} />
             
-            <Card className="fantasy-card border-fantasy-primary border-opacity-20">
-              <CardHeader>
-                <CardTitle className="text-fantasy-accent flex items-center">
-                  <Trophy className="mr-2 h-5 w-5" />
-                  <span>Rewards</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-fantasy-dark bg-opacity-40 rounded-lg p-3 border border-fantasy-primary border-opacity-20">
-                  <p className="font-medium mb-1">Mystery Chest</p>
-                  <p className="text-sm text-fantasy-light text-opacity-70">Complete 5 more quests to unlock</p>
-                  <Progress value={60} className="fantasy-progress-bar mt-2" />
-                </div>
-                
-                <div className="bg-fantasy-dark bg-opacity-40 rounded-lg p-3 border border-fantasy-primary border-opacity-20">
-                  <p className="font-medium mb-1">30% off Fitness App</p>
-                  <p className="text-sm text-fantasy-light text-opacity-70">Unlocked - Health milestone achieved!</p>
-                  <Button variant="outline" className="mt-2 w-full text-sm h-8 fantasy-button-outline">
-                    Claim Reward
-                  </Button>
-                </div>
-                
-                <Button variant="outline" className="w-full fantasy-button-outline">
-                  View All Rewards
-                </Button>
-              </CardContent>
-            </Card>
+            {/* Guild Hall */}
+            <GuildHall 
+              activeGuild={activeGuild}
+              publicGuilds={publicGuilds}
+              onJoinGuild={handleJoinGuild}
+            />
           </div>
         </div>
       </div>
+
+      {/* Quest Completion Effect */}
+      {completedQuest && (
+        <QuestCompletionEffect
+          show={showCompletionEffect}
+          xpGained={completedQuest.xp}
+          questName={completedQuest.name}
+          onComplete={() => {
+            setShowCompletionEffect(false);
+            setCompletedQuest(null);
+          }}
+        />
+      )}
+
+      {/* Quest Lore */}
+      {completedQuest && (
+        <QuestLore
+          questId={completedQuest.name.toLowerCase().split(' ')[0]}
+          questName={completedQuest.name}
+        />
+      )}
     </div>
   );
 };
