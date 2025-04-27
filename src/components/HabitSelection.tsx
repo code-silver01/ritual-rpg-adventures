@@ -2,95 +2,38 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { motion } from 'framer-motion';
-import { HabitData, Habit } from '@/types/habit';
 
-interface HabitSelectionProps {
-  onHabitsSelected: (habits: HabitData) => void;
-  onBack: () => void;
-  initialHabits: Habit[];
+interface Habit {
+  id: string;
+  name: string;
+  frequency: string;
+  difficulty: string;
 }
 
-const predefinedHabits: Habit[] = [
-  {
-    id: '1',
-    name: 'Drink 8 glasses of water',
-    frequency: 'daily',
-    difficulty: 'easy'
-  },
-  {
-    id: '2',
-    name: 'Exercise for 30 minutes',
-    frequency: 'daily',
-    difficulty: 'medium'
-  },
-  {
-    id: '3',
-    name: 'Read for 30 minutes',
-    frequency: 'daily',
-    difficulty: 'easy'
-  },
-  {
-    id: '4',
-    name: 'Meditate for 10 minutes',
-    frequency: 'daily',
-    difficulty: 'easy'
-  },
-  {
-    id: '5',
-    name: 'Write in journal',
-    frequency: 'daily',
-    difficulty: 'easy'
-  }
-];
+interface HabitSelectionProps {
+  onHabitsSelected: (selectedIds: string[]) => void;
+  onBack: () => void;
+  habits: Habit[];
+}
 
 const HabitSelection: React.FC<HabitSelectionProps> = ({
   onHabitsSelected,
   onBack,
-  initialHabits
+  habits
 }) => {
-  const [selectedHabitIds, setSelectedHabitIds] = useState<string[]>([]);
-  const [customHabits, setCustomHabits] = useState<string[]>([]);
-  const [newCustomHabit, setNewCustomHabit] = useState('');
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
-  const handleHabitToggle = (habitId: string) => {
-    setSelectedHabitIds(prev => {
-      if (prev.includes(habitId)) {
-        return prev.filter(id => id !== habitId);
-      } else {
-        return [...prev, habitId];
-      }
-    });
-  };
-
-  const handleAddCustomHabit = () => {
-    if (newCustomHabit.trim()) {
-      setCustomHabits([...customHabits, newCustomHabit.trim()]);
-      setNewCustomHabit('');
-    }
-  };
-
-  const handleRemoveCustomHabit = (index: number) => {
-    setCustomHabits(customHabits.filter((_, i) => i !== index));
-  };
-
-  const handleSubmit = () => {
-    onHabitsSelected({
-      habits: initialHabits,
-      selectedHabits: selectedHabitIds
-    });
+  const handleToggle = (id: string) => {
+    setSelectedIds(prev => 
+      prev.includes(id) 
+        ? prev.filter(i => i !== id)
+        : [...prev, id]
+    );
   };
 
   return (
     <div className="min-h-screen bg-fantasy-dark py-12 px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto"
-      >
+      <div className="max-w-4xl mx-auto">
         <Button 
           variant="ghost" 
           onClick={onBack}
@@ -108,12 +51,12 @@ const HabitSelection: React.FC<HabitSelectionProps> = ({
           </CardHeader>
           
           <CardContent className="space-y-6">
-            {initialHabits.map((habit) => (
+            {habits.map((habit) => (
               <div key={habit.id} className="flex items-center space-x-2">
                 <Checkbox
                   id={habit.id}
-                  checked={selectedHabitIds.includes(habit.id)}
-                  onCheckedChange={() => handleHabitToggle(habit.id)}
+                  checked={selectedIds.includes(habit.id)}
+                  onCheckedChange={() => handleToggle(habit.id)}
                   className="mt-0.5 data-[state=checked]:bg-fantasy-primary data-[state=checked]:border-fantasy-primary"
                 />
                 <label
@@ -129,13 +72,13 @@ const HabitSelection: React.FC<HabitSelectionProps> = ({
           <CardFooter>
             <Button 
               className="w-full fantasy-button"
-              onClick={handleSubmit}
+              onClick={() => onHabitsSelected(selectedIds)}
             >
               Continue to Guild Creation
             </Button>
           </CardFooter>
         </Card>
-      </motion.div>
+      </div>
     </div>
   );
 };
