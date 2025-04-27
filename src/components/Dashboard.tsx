@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -12,6 +11,7 @@ import GuildPanel from './GuildPanel';
 import BadgeSystem, { sampleBadges } from './BadgeSystem';
 import { AvatarData } from './AvatarCreation';
 import { HabitData } from './HabitSelection';
+import MirrorOfGrowth from './MirrorOfGrowth';
 
 interface DashboardProps {
   avatarData: AvatarData;
