@@ -6,7 +6,26 @@ import { HabitData } from '@/types/habit';
 const Habits: React.FC = () => {
   const navigate = useNavigate();
   const [selectedHabits, setSelectedHabits] = useState<HabitData>({
-    habits: [],
+    habits: [
+      {
+        id: '1',
+        name: 'Drink 8 glasses of water',
+        frequency: 'daily',
+        difficulty: 'easy'
+      },
+      {
+        id: '2',
+        name: 'Exercise for 30 minutes',
+        frequency: 'daily',
+        difficulty: 'medium'
+      },
+      {
+        id: '3',
+        name: 'Read for 30 minutes',
+        frequency: 'daily',
+        difficulty: 'easy'
+      }
+    ],
     selectedHabits: []
   });
 
@@ -26,6 +45,7 @@ const Habits: React.FC = () => {
         <HabitSelection
           onHabitsSelected={handleHabitsSelected}
           onBack={handleBack}
+          initialHabits={selectedHabits.habits}
         />
       </div>
     </div>
